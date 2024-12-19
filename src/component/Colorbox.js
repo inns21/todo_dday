@@ -1,7 +1,7 @@
 import '../App.css';
 
-function Colorbox({onColorChange}) {
-  let changeColor = (colorClass) => {
+const Colorbox = ({onColorChange}) => {
+  const changeColor = (colorClass) => {
     onColorChange(colorClass);
   }
 
