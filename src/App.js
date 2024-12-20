@@ -41,7 +41,14 @@ function App() {
     setTodo(newTodos);
   }
   
-  let todos = todo.map((item => <Todo key={item.id} data={item} setChecked={setChecked}></Todo>))
+  const deleteTodo = (id) =>{
+    let newTodos = [...todo];
+    let index = newTodos.findIndex(item => (item.id === id));
+    newTodos.splice(index, 1);
+    setTodo(newTodos);
+  }
+
+  let todos = todo.map((item => <Todo key={item.id} data={item} setChecked={setChecked} deleteTodo={deleteTodo}></Todo>))
   return (
     <div className={`h-screen ${bgColor} m-6 gap-x-4`}>
       <div className='flex'>
