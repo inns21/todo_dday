@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Colorbox from './component/Colorbox';
 import Todo from './component/Todo';
@@ -9,6 +9,26 @@ function App() {
   const [todoid, setTodoid] = useState(0);
   const [modal, setModal] = useState(false);
   const [bgColor, setbgColor] = useState('bg-yellow-100');
+
+   // 초기 데이터 로드
+  useEffect(() => {
+    console.log("저장데이터 불러오기")
+    const savedTodos = localStorage.getItem("todos");
+    const savedTodoid = localStorage.getItem("todoid");
+    const savedbgColor = localStorage.getItem("bgColor");
+
+    if (savedTodos) setTodo(JSON.parse(savedTodos));
+    if (savedTodoid) setTodoid(JSON.parse(savedTodoid));
+    if (savedbgColor) setbgColor(JSON.parse(savedbgColor));
+  }, []);
+
+  // todo와 todoid 변경 시 로컬 스토리지에 저장
+  useEffect(() => {
+    console.log("변경사항저장")
+    localStorage.setItem("todos", JSON.stringify(todo));
+    localStorage.setItem("todoid", JSON.stringify(todoid));
+    localStorage.setItem("bgColor", JSON.stringify(bgColor));
+  }, [todo, todoid, bgColor]);
   
   const toggleModal = () => {
     setModal(!modal);
@@ -37,7 +57,7 @@ function App() {
   const setChecked = (id, check) => {
     let newTodos = [...todo];
     let index = newTodos.findIndex(item => (item.id === id));
-    newTodos[index] = { id: id, text: newTodos[index].text, check};
+    newTodos[index] = { id: id, text: newTodos[index].text, checked:check};
     setTodo(newTodos);
   }
   
