@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import Colorbox from './component/Colorbox';
 import Todo from './component/Todo';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function App() {
   const [input, setInput] = useState(""); 
@@ -43,11 +45,6 @@ function App() {
     setInput(e.target.value);
   };
 
-  const handleDateChange = (e) => {
-    setDate(e.target.value);
-  };
-
-
   const handleSubmit = (e) => {
     e.preventDefault(); 
     if (input.trim() === "") return; 
@@ -83,15 +80,22 @@ function App() {
           placeholder="할 일"
           className="mt-8 ml-6 m-2 h-10 min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-pink-200 sm:text-sm/6"
         />
-        <p className="mt-8 h-10 min-w-0 rounded-md px-1.5 py-2 text-base outline outline-1 -outline-offset-1 outline-white/10 sm:text-sm/6"
-        >마감일:</p>
-        <input
-          value={date}
-          type='date'
-          onChange={handleDateChange}
-          className="mt-8 h-10 min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline outline-1 -outline-offset-1 outline-white/10 sm:text-sm/6"
-        >
-        </input>
+        <div className='flex'>
+          <label
+            htmlFor="dateInput"
+            className="mt-8 h-10 min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline outline-1 -outline-offset-1 outline-white/10 sm:text-sm md:text-xs lg:text-xs whitespace-nowrap"
+          >
+            마감일:
+          </label>
+          <DatePicker
+            id='dateInput'
+            selected={date}
+            type='date'
+            onChange={(date) => setDate(date)}
+            className="mt-8 h-10 min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline outline-1 -outline-offset-1 outline-white/10 sm:text-sm/6"
+            >
+          </DatePicker>
+        </div>
         <button
           type="submit"
           onClick={handleSubmit}
