@@ -104,7 +104,7 @@ function App() {
         {todos}
       </div>
       <button className='absolute bottom-1 right-12 rounded' onClick={toggleModal}>
-        <img src='/colorChangeButton.png'></img>
+        <img src='/colorChangeButton.png' alt=''></img>
       </button>
       {modal && <Colorbox onColorChange={handleColorChange}></Colorbox>}
     </div>
