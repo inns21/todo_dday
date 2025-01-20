@@ -9,6 +9,7 @@ function App() {
   const [todoid, setTodoid] = useState(0);
   const [modal, setModal] = useState(false);
   const [bgColor, setbgColor] = useState('bg-yellow-100');
+  const [date, setDate] = useState("");
 
    // 초기 데이터 로드
   useEffect(() => {
@@ -42,13 +43,17 @@ function App() {
     setInput(e.target.value);
   };
 
+  const handleDateChange = (e) => {
+    setDate(e.target.value);
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault(); 
     if (input.trim() === "") return; 
     let newTodos = [...todo];
     let newId = todoid + 1;
-    newTodos.push({id:newId, text:input, checked: false})
+    newTodos.push({id:newId, text:input, checked: false, endDate:date})
     setTodoid(newId);
     setTodo(newTodos); 
     setInput(""); 
@@ -57,7 +62,7 @@ function App() {
   const setChecked = (id, check) => {
     let newTodos = [...todo];
     let index = newTodos.findIndex(item => (item.id === id));
-    newTodos[index] = { id: id, text: newTodos[index].text, checked:check};
+    newTodos[index] = { id: id, text: newTodos[index].text, checked:check, endDate:newTodos[index].endDate};
     setTodo(newTodos);
   }
   
@@ -76,8 +81,17 @@ function App() {
           value={input}
           onChange={handleChange}
           placeholder="할 일"
-          className="mt-8 ml-6 m-4 h-10 min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-pink-200 sm:text-sm/6"
+          className="mt-8 ml-6 m-2 h-10 min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-pink-200 sm:text-sm/6"
         />
+        <p className="mt-8 h-10 min-w-0 rounded-md px-1.5 py-2 text-base outline outline-1 -outline-offset-1 outline-white/10 sm:text-sm/6"
+        >마감일:</p>
+        <input
+          value={date}
+          type='date'
+          onChange={handleDateChange}
+          className="mt-8 h-10 min-w-0 flex-auto rounded-md px-3.5 py-2 text-base outline outline-1 -outline-offset-1 outline-white/10 sm:text-sm/6"
+        >
+        </input>
         <button
           type="submit"
           onClick={handleSubmit}
